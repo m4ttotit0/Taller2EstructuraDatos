@@ -2,9 +2,9 @@
 
 class Node {
 public:
-  int valor;
-  int posX;
-  int posY;
+  int value;
+  int xPos;
+  int yPos;
 
   Node* nextRow;
   Node* nextCol;
