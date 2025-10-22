@@ -1,5 +1,6 @@
 #include <iostream>
 #include <ctime>
+#include "SparseMatrix.h"
 using namespace std;
 
 int main() {
@@ -23,6 +24,7 @@ int main() {
         switch (menu)
         {
         case 1: //agregar
+          {
             int valor = 0;
             int posx = 0;
             int posy = 0;
@@ -40,9 +42,10 @@ int main() {
             std::clock_t fin = std::clock();
             double tiempoTranscurrido = (double)(fin - inicio) / CLOCKS_PER_SEC;
             std::cout << "Tiempo de CPU consumido: " << tiempoTranscurrido << " segundos" << std::endl;
+          }
             break;
-          
         case 2: //obtener
+          {
             int posx = 0;
             int posy = 0;
             cout<< "\nIngrese la posición x: ";
@@ -57,8 +60,10 @@ int main() {
             std::clock_t fin = std::clock();
             double tiempoTranscurrido = (double)(fin - inicio) / CLOCKS_PER_SEC;
             std::cout << "Tiempo de CPU consumido: " << tiempoTranscurrido << " segundos" << std::endl;
+          }
             break;
         case 3: //Eliminar
+          {
             int posx = 0;
             int posy = 0;
             cout<< "\nIngrese la posición x: ";
@@ -73,9 +78,11 @@ int main() {
             std::clock_t fin = std::clock();
             double tiempoTranscurrido = (double)(fin - inicio) / CLOCKS_PER_SEC;
             std::cout << "Tiempo de CPU consumido: " << tiempoTranscurrido << " segundos" << std::endl;
+          }
             break;
           
         case 4: //Imprimir
+
             std::clock_t inicio = std::clock();
           
             funciones.printStoredValues();
@@ -83,7 +90,7 @@ int main() {
             std::clock_t fin = std::clock();
             double tiempoTranscurrido = (double)(fin - inicio) / CLOCKS_PER_SEC;
             std::cout << "Tiempo de CPU consumido: " << tiempoTranscurrido << " segundos" << std::endl;
-          
+
             break;
         case 5: //densidad
             std::clock_t inicio = std::clock();
@@ -93,12 +100,11 @@ int main() {
             std::clock_t fin = std::clock();
             double tiempoTranscurrido = (double)(fin - inicio) / CLOCKS_PER_SEC;
             std::cout << "Tiempo de CPU consumido: " << tiempoTranscurrido << " segundos" << std::endl;
-          
             break;
         case 6: //multiplicación
             break;
         case 9:
-            cout << "Saliendo...\n";
+          cout << "Saliendo...\n";
             break;
         default:
             cout << "Ingrese una opcion valida\n";
