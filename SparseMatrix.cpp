@@ -120,10 +120,9 @@ void SparseMatrix::printStoredValues()
 }
 int SparseMatrix::density()
 {
-
     int totalCells = (maxRow + 1) * (maxCol + 1);
     if (totalCells == 0)
         return 0;
-    return (count * 100) / totalCells;
+    return (int)(((double)count * 100.0) / totalCells);
     // En pocas palabras sacamos el porcentaje de numeros existentes en el total
 }
