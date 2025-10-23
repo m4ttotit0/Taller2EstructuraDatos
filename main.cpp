@@ -3,8 +3,9 @@
 #include "SparseMatrix.h"
 using namespace std;
 
+
 int main() {
-  SparseMatrix funciones; //Creo la variable referente a la clase SparseMatrix.cpp (I hope so)
+  SparseMatrix funciones;
   
   int menu=0;
   while (menu != 9)
@@ -19,7 +20,12 @@ int main() {
         cout << "9.- Salir\n";
         cout << "========================\n";
         cout << "Ingrese una opción: ";
-        cin >> menu;
+        
+        // Entrada directa para el menú (sin validación robusta)
+        if (!(cin >> menu)) {
+            cout << "Entrada inválida. Saliendo...\n";
+            break;
+        }
 
         switch (menu)
         {
@@ -28,12 +34,15 @@ int main() {
             int valor = 0;
             int posx = 0;
             int posy = 0;
+            
             cout<< "\nIngrese un valor: ";
-            cin >> valor;
-            cout<< "\nIngrese la posición x: ";
-            cin >> posx;
-            cout<< "\nIngrese la posición y: ";
-            cin >> posy;
+            if (!(cin >> valor)) break; 
+            
+            // Validación
+            cout<< "\nIngrese la posición x (fila): ";
+            if (!(cin >> posx)) break;
+            cout<< "\nIngrese la posición y (columna): ";
+            if (!(cin >> posy)) break;
           
             std::clock_t inicio = std::clock();
           
@@ -48,28 +57,34 @@ int main() {
           {
             int posx = 0;
             int posy = 0;
-            cout<< "\nIngrese la posición x: ";
-            cin >> posx;
-            cout<< "\nIngrese la posición y:  ";
-            cin >> posy;
+            
+            // Revisar que sean datos válidos
+            cout<< "\nIngrese la posición x (fila): ";
+            if (!(cin >> posx)) break;
+            cout<< "\nIngrese la posición y (columna): ";
+            if (!(cin >> posy)) break;
           
             std::clock_t inicio = std::clock();
           
-            funciones.get(posx, posy);
+            int resultado = funciones.get(posx, posy);
+            cout << "Valor en (" << posx << ", " << posy << "): " << resultado << endl;
           
             std::clock_t fin = std::clock();
             double tiempoTranscurrido = (double)(fin - inicio) / CLOCKS_PER_SEC;
             std::cout << "Tiempo de CPU consumido: " << tiempoTranscurrido << " segundos" << std::endl;
           }
             break;
+          
         case 3: //Eliminar
           {
             int posx = 0;
             int posy = 0;
-            cout<< "\nIngrese la posición x: ";
-            cin >> posx;
-            cout<< "\nIngrese la posición y:  ";
-            cin >> posy;
+            
+            // Entrada directa de coordenadas
+            cout<< "\nIngrese la posición x (fila): ";
+            if (!(cin >> posx)) break;
+            cout<< "\nIngrese la posición y (columna): ";
+            if (!(cin >> posy)) break;
           
             std::clock_t inicio = std::clock();
           
@@ -89,20 +104,46 @@ int main() {
           
             std::clock_t fin = std::clock();
             double tiempoTranscurrido = (double)(fin - inicio) / CLOCKS_PER_SEC;
+          
             std::cout << "Tiempo de CPU consumido: " << tiempoTranscurrido << " segundos" << std::endl;
 
             break;
         case 5: //densidad
             std::clock_t inicio = std::clock();
           
-            funciones.density();
+            int dens = funciones.density();
+            cout << "La densidad de la matriz es: " << dens << "%" << endl;
           
             std::clock_t fin = std::clock();
             double tiempoTranscurrido = (double)(fin - inicio) / CLOCKS_PER_SEC;
             std::cout << "Tiempo de CPU consumido: " << tiempoTranscurrido << " segundos" << std::endl;
             break;
+            
         case 6: //multiplicación
+            {
+                cout << "\n--- MULTIPLICACIÓN DE MATRICES ---\n";
+
+                SparseMatrix B;
+                B.add(2, 0, 0); // Datos de ejemplo para la Matriz B
+                B.add(3, 1, 1);
+                B.add(1, 0, 2);
+
+                std::clock_t inicio = std::clock();
+
+                SparseMatrix* C = funciones.multiply(&B);
+
+                std::clock_t fin = std::clock();
+                double tiempoTranscurrido = (double)(fin - inicio) / CLOCKS_PER_SEC;
+
+                if (C != nullptr) {
+                    cout << "\nResultado de la Matriz C = A * B:" << endl;
+                    C->printStoredValues();
+                    delete C;
+                }
+                std::cout << "Tiempo de CPU consumido: " << tiempoTranscurrido << " segundos" << std::endl;
+            }
             break;
+            
         case 9:
           cout << "Saliendo...\n";
             break;
