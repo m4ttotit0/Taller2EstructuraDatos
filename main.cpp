@@ -6,8 +6,15 @@ using namespace std;
 
 int main() {
   SparseMatrix funciones;
-  
+ 
   int menu=0;
+ 
+  //Variables de tiempo
+  std::clock_t inicio;
+  std::clock_t fin;
+  double tiempoTranscurrido;
+
+ 
   while (menu != 9)
     {
         cout << "========================\n";
@@ -20,8 +27,8 @@ int main() {
         cout << "9.- Salir\n";
         cout << "========================\n";
         cout << "Ingrese una opción: ";
-        
-        // Entrada directa para el menú (sin validación robusta)
+       
+       
         if (!(cin >> menu)) {
             cout << "Entrada inválida. Saliendo...\n";
             break;
@@ -34,93 +41,91 @@ int main() {
             int valor = 0;
             int posx = 0;
             int posy = 0;
-            
+           
             cout<< "\nIngrese un valor: ";
-            if (!(cin >> valor)) break; 
-            
+            if (!(cin >> valor)) break;
+           
             // Validación
             cout<< "\nIngrese la posición x (fila): ";
             if (!(cin >> posx)) break;
             cout<< "\nIngrese la posición y (columna): ";
             if (!(cin >> posy)) break;
-          
-            std::clock_t inicio = std::clock();
-          
+         
+           
+            inicio = std::clock();
+         
             funciones.add(valor, posx, posy);
-          
-            std::clock_t fin = std::clock();
-            double tiempoTranscurrido = (double)(fin - inicio) / CLOCKS_PER_SEC;
+         
+       
+            fin = std::clock();
+            tiempoTranscurrido = (double)(fin - inicio) / CLOCKS_PER_SEC;
             std::cout << "Tiempo de CPU consumido: " << tiempoTranscurrido << " segundos" << std::endl;
-          }
-            break;
+            break;}
         case 2: //obtener
           {
             int posx = 0;
             int posy = 0;
-            
+           
             // Revisar que sean datos válidos
             cout<< "\nIngrese la posición x (fila): ";
             if (!(cin >> posx)) break;
             cout<< "\nIngrese la posición y (columna): ";
             if (!(cin >> posy)) break;
-          
-            std::clock_t inicio = std::clock();
-          
+         
+            inicio = std::clock();
+         
             int resultado = funciones.get(posx, posy);
             cout << "Valor en (" << posx << ", " << posy << "): " << resultado << endl;
-          
-            std::clock_t fin = std::clock();
-            double tiempoTranscurrido = (double)(fin - inicio) / CLOCKS_PER_SEC;
+         
+            fin = std::clock();
+            tiempoTranscurrido = (double)(fin - inicio) / CLOCKS_PER_SEC;
             std::cout << "Tiempo de CPU consumido: " << tiempoTranscurrido << " segundos" << std::endl;
-          }
-            break;
-          
+            break;}
+         
         case 3: //Eliminar
           {
             int posx = 0;
             int posy = 0;
-            
-            // Entrada directa de coordenadas
+           
+           
             cout<< "\nIngrese la posición x (fila): ";
             if (!(cin >> posx)) break;
             cout<< "\nIngrese la posición y (columna): ";
             if (!(cin >> posy)) break;
-          
-            std::clock_t inicio = std::clock();
-          
+         
+            inicio = std::clock();
+         
             funciones.remove(posx, posy);
-          
-            std::clock_t fin = std::clock();
-            double tiempoTranscurrido = (double)(fin - inicio) / CLOCKS_PER_SEC;
+         
+            fin = std::clock();
+            tiempoTranscurrido = (double)(fin - inicio) / CLOCKS_PER_SEC;
             std::cout << "Tiempo de CPU consumido: " << tiempoTranscurrido << " segundos" << std::endl;
-          }
-            break;
-          
+            break;}
+         
         case 4: //Imprimir
-
-            std::clock_t inicio = std::clock();
-          
-            funciones.printStoredValues();
-          
-            std::clock_t fin = std::clock();
-            double tiempoTranscurrido = (double)(fin - inicio) / CLOCKS_PER_SEC;
-          
-            std::cout << "Tiempo de CPU consumido: " << tiempoTranscurrido << " segundos" << std::endl;
-
-            break;
-        case 5: //densidad
-            std::clock_t inicio = std::clock();
-          
-            int dens = funciones.density();
-            cout << "La densidad de la matriz es: " << dens << "%" << endl;
-          
-            std::clock_t fin = std::clock();
-            double tiempoTranscurrido = (double)(fin - inicio) / CLOCKS_PER_SEC;
-            std::cout << "Tiempo de CPU consumido: " << tiempoTranscurrido << " segundos" << std::endl;
-            break;
-            
-        case 6: //multiplicación
             {
+            inicio = std::clock();
+         
+            funciones.printStoredValues();
+         
+            fin = std::clock();
+            tiempoTranscurrido = (double)(fin - inicio) / CLOCKS_PER_SEC;
+         
+            std::cout << "Tiempo de CPU consumido: " << tiempoTranscurrido << " segundos" << std::endl;
+            break;}
+        case 5: //densidad
+           {
+            inicio = std::clock();
+         
+            double dens = funciones.density();
+            cout << "La densidad de la matriz es: " << dens << "%" << endl;
+         
+            fin = std::clock();
+            tiempoTranscurrido = (double)(fin - inicio) / CLOCKS_PER_SEC;
+            std::cout << "Tiempo de CPU consumido: " << tiempoTranscurrido << " segundos" << std::endl;
+              break;}
+           
+        case 6:{
                 cout << "\n--- MULTIPLICACIÓN DE MATRICES ---\n";
 
                 SparseMatrix B;
@@ -128,12 +133,12 @@ int main() {
                 B.add(3, 1, 1);
                 B.add(1, 0, 2);
 
-                std::clock_t inicio = std::clock();
+                inicio = std::clock();
 
                 SparseMatrix* C = funciones.multiply(&B);
 
-                std::clock_t fin = std::clock();
-                double tiempoTranscurrido = (double)(fin - inicio) / CLOCKS_PER_SEC;
+                fin = std::clock();
+                tiempoTranscurrido = (double)(fin - inicio) / CLOCKS_PER_SEC;
 
                 if (C != nullptr) {
                     cout << "\nResultado de la Matriz C = A * B:" << endl;
@@ -141,17 +146,18 @@ int main() {
                     delete C;
                 }
                 std::cout << "Tiempo de CPU consumido: " << tiempoTranscurrido << " segundos" << std::endl;
-            }
-            break;
-            
+                break;}
+           
         case 9:
+        {
           cout << "Saliendo...\n";
-            break;
+            break;}
         default:
+        {
             cout << "Ingrese una opcion valida\n";
-            break;
+            break;}
         }
     }
-  
+ 
   return 0;
 }
