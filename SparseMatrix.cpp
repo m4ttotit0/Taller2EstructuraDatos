@@ -206,12 +206,11 @@ void SparseMatrix::printStoredValues() {
 }
 
 
-int SparseMatrix::density() {
+double SparseMatrix::density() {
     int totalCells = (maxRow + 1) * (maxCol + 1);
     if (totalCells == 0)
-        return 0;
-    
-    return (int)(((double)count * 100.0) / totalCells);
+        return 0.0;
+    return ((double)count * 100.0) / totalCells;
 }
 
 
